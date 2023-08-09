@@ -10,7 +10,7 @@ public class SnakeController : MonoBehaviour
     Vector2 direction;
 
     Coroutine move;
-    
+
     void Update()
     {
         GetDirection();
@@ -38,12 +38,12 @@ public class SnakeController : MonoBehaviour
             tempDirection = Vector2.right;
             UpdateDirection(tempDirection);
         }
-        else if(Input.GetKey(KeyCode.W))
+        else if(Input.GetKeyDown(KeyCode.W))
         {
             tempDirection = Vector2.up;
             UpdateDirection(tempDirection);
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if(Input.GetKeyDown(KeyCode.S))
         {
             tempDirection = Vector2.down;
             UpdateDirection(tempDirection);
@@ -63,6 +63,7 @@ public class SnakeController : MonoBehaviour
         snakeBody.UpdateNextPosition(transform.position);
 
         transform.position += (Vector3)direction;
+        BoardManager.Instance.AddEmptyGrid((int)transform.position.x,(int)transform.position.y);
 
         snakeBody.UpdatePosition();
         yield return new WaitForSeconds(.5f);
@@ -84,7 +85,7 @@ public class SnakeController : MonoBehaviour
             tempSnakeBody = tempSnakeBody.nextNode;
         }
 
-        var newSnakeBody = Instantiate(snakeBodyPrefab,tempSnakeBody.transform);
+        var newSnakeBody = Instantiate(snakeBodyPrefab,tempSnakeBody.transform.position,Quaternion.identity);
 
         tempSnakeBody.nextNode = newSnakeBody;
     }   

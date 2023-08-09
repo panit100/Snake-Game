@@ -7,13 +7,22 @@ public class SnakeBody : MonoBehaviour
 {
     public SnakeBody nextNode;
 
-    Vector3 nextPosition;
+    public Vector3 nextPosition;
+
+    public Vector2 tempPosition;
 
     public void UpdatePosition()
     {
+        tempPosition = transform.position;
+
         transform.position = nextPosition;
+        
         if(nextNode != null)
             nextNode.UpdatePosition();
+        else
+        {
+            BoardManager.Instance.RemoveEmptyGrid((int)tempPosition.x,(int)tempPosition.y);
+        }
     }
 
     public void UpdateNextPosition(Vector3 _nextPosition)

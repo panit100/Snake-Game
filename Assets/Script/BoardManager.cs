@@ -6,14 +6,17 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance { get; private set;}
 
-    public int width;
-    public int height;
+    public int width = 0;
+    public int height = 0;
 
     public GameObject gridPrefab;
     public GameObject boarderPrefab;
 
     public Color gridColor1;
     public Color gridColor2;
+
+    public GameObject[,] grids;
+    public List<GameObject> notEmptyGridList = new List<GameObject>();
 
     private void Awake() 
     {
@@ -22,6 +25,8 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {   
+        grids = new GameObject[width,height];
+
         CrateBoard();
         CraeteBoarder();
     }
@@ -30,9 +35,9 @@ public class BoardManager : MonoBehaviour
     {
         Color gridColor = gridColor1;
 
-        for(int i = 0; i < width; i++)
+        for(int i = 0; i < grids.GetLength(0); i++)
         {
-            for(int j = 0;j<height; j++)
+            for(int j = 0;j < grids.GetLength(1); j++)
             {
                 if(gridColor == gridColor2)
                     gridColor = gridColor1;
@@ -44,6 +49,8 @@ public class BoardManager : MonoBehaviour
                 GameObject grid = Instantiate(gridPrefab, position, Quaternion.identity);
                 grid.GetComponent<SpriteRenderer>().color = gridColor;;
                 grid.transform.parent = this.transform;;
+
+                grids[i,j] = grid;
             }
         }
     }
@@ -74,5 +81,17 @@ public class BoardManager : MonoBehaviour
             boarder = Instantiate(boarderPrefab, position, Quaternion.identity);
             boarder.transform.parent = this.transform;;
         }
+    }
+
+    public void AddEmptyGrid(int x,int y)
+    {
+        if(!notEmptyGridList.Find(n => n == grids[x,y]))
+            notEmptyGridList.Add(grids[x,y]);
+    }
+
+    public void RemoveEmptyGrid(int x,int y)
+    {
+        if(notEmptyGridList.Find(n => n == grids[x,y]))
+            notEmptyGridList.Remove(grids[x,y]);
     }
 }
