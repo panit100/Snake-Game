@@ -10,6 +10,7 @@ public class AppleScript : MonoBehaviour
         {
             other.GetComponent<SnakeController>().AddBody();
             AppleSpawner.Instance.SpawnAppleOnGrid();
+            ScoreManager.Instance.IncreaseScore();
 
             Destroy(this.gameObject);
         }
