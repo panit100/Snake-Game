@@ -7,9 +7,9 @@ public class SnakeBody : MonoBehaviour
 {
     public SnakeBody nextNode;
 
-    public Vector3 nextPosition;
+    Vector3 nextPosition;
 
-    public Vector2 tempPosition;
+    Vector2 tempPosition;
 
     public void UpdatePosition()
     {

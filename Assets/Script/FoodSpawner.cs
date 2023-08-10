@@ -6,7 +6,7 @@ public class FoodSpawner : MonoBehaviour
 {
     public static FoodSpawner Instance { get; private set;}
 
-    public FoodScript food;
+    [SerializeField] FoodScript food;
 
     private void Awake() 
     {

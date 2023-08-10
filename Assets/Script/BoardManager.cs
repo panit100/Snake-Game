@@ -9,16 +9,16 @@ public class BoardManager : MonoBehaviour
     public int width = 0;
     public int height = 0;
 
-    public GameObject gridPrefab;
-    public GameObject boarderPrefab;
+    [SerializeField] GameObject gridPrefab;
+    [SerializeField] GameObject boarderPrefab;
 
-    public Color gridColor1;
-    public Color gridColor2;
+    [SerializeField] Color gridColor1;
+    [SerializeField] Color gridColor2;
 
     public GameObject[,] grids;
     public List<GameObject> notEmptyGridList = new List<GameObject>();
 
-    private void Awake() 
+    void Awake() 
     {
         Instance = this;    
     }

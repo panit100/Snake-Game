@@ -9,10 +9,10 @@ public class ScoreManager : MonoBehaviour
 
     int score = 0;
 
-    public TMP_Text scoreText;
-    public TMP_Text highScoreText;
+    [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text highScoreText;
 
-    private void Awake() 
+    void Awake() 
     {
         Instance = this;
     }

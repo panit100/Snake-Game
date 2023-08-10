@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SnakeController : MonoBehaviour
 {
-    public SnakeBody snakeBody;
-    public SnakeBody snakeBodyPrefab;
+    [SerializeField] SnakeBody snakeBody;
+    [SerializeField] SnakeBody snakeBodyPrefab;
 
     Vector2 direction;
 
@@ -18,7 +18,7 @@ public class SnakeController : MonoBehaviour
 
     void StartMove()
     {
-        if(GameManager.Instance.currentStage == GameStage.START)
+        if(GameManager.Instance.GetCurrentStage() == GameStage.START)
         {
             StartCoroutine(Move());
             GameManager.Instance.OnChangeStage(GameStage.PLAYING);
