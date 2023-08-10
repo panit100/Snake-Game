@@ -18,9 +18,10 @@ public class SnakeController : MonoBehaviour
 
     void StartMove()
     {
-        if(move == null)
+        if(GameManager.Instance.currentStage == GameStage.START)
         {
             StartCoroutine(Move());
+            GameManager.Instance.OnChangeStage(GameStage.PLAYING);
         }
     }
 
@@ -31,31 +32,39 @@ public class SnakeController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.A))
         {
             tempDirection = Vector2.left;
-            UpdateDirection(tempDirection);
+            if(UpdateDirection(tempDirection))
+                transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
         }
         else if(Input.GetKeyDown(KeyCode.D))
         {
             tempDirection = Vector2.right;
-            UpdateDirection(tempDirection);
+            if(UpdateDirection(tempDirection))
+                transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
         }
         else if(Input.GetKeyDown(KeyCode.W))
         {
             tempDirection = Vector2.up;
-            UpdateDirection(tempDirection);
+            if(UpdateDirection(tempDirection))
+                transform.rotation = Quaternion.Euler(new Vector3(0,0,90));
         }
         else if(Input.GetKeyDown(KeyCode.S))
         {
             tempDirection = Vector2.down;
-            UpdateDirection(tempDirection);
+            if(UpdateDirection(tempDirection))
+                transform.rotation = Quaternion.Euler(new Vector3(0,0,270));
         }
     }
 
-    void UpdateDirection(Vector2 tempDirection)
+    bool UpdateDirection(Vector2 tempDirection)
     {
         if(tempDirection != direction * -1)
+        {
             direction = tempDirection;
+            StartMove();
+            return true;
+        }
 
-        StartMove();
+        return false;   
     }
 
     IEnumerator Move()
@@ -73,7 +82,10 @@ public class SnakeController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.CompareTag("Boarder") || other.CompareTag("SnakeBody"))
+        {
             StopCoroutine(move);    
+            GameManager.Instance.OnChangeStage(GameStage.END);
+        }
     }
 
     public void AddBody()

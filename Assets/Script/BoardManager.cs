@@ -85,6 +85,9 @@ public class BoardManager : MonoBehaviour
 
     public void AddEmptyGrid(int x,int y)
     {
+        if(x < 0 || x == width || y < 0 || y == height)
+            return;
+
         if(!notEmptyGridList.Find(n => n == grids[x,y]))
             notEmptyGridList.Add(grids[x,y]);
     }

@@ -10,20 +10,37 @@ public class ScoreManager : MonoBehaviour
     int score = 0;
 
     public TMP_Text scoreText;
+    public TMP_Text highScoreText;
 
     private void Awake() 
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        SetHighScoreText();
+    }
+
     void UpdateScore()
     {
-        scoreText.text = $"Score : {score}";
+        scoreText.text = $"{score}";
     }
 
     public void IncreaseScore()
     {
         score++;
         UpdateScore();
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    void SetHighScoreText()
+    {
+        var tempHighScore = PlayerPrefs.GetInt(GameManager.HIGHSCORE,0);
+        highScoreText.text = $"{tempHighScore}"; 
     }
 }
